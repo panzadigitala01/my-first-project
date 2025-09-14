@@ -11,13 +11,35 @@
             font-family: 'Inter', sans-serif;
             background-color: #0a0a0a;
             color: #e5e5e5;
+            cursor: default;
         }
         .hero-gradient {
             background: radial-gradient(ellipse at top, rgba(147, 51, 234, 0.15) 0%, rgba(10, 10, 10, 0) 50%);
         }
-        .section-gradient {
-             background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.1) 0%, rgba(10, 10, 10, 0) 60%);
+
+        /* Creative Gradient Effects for Sections */
+        section {
+            position: relative;
+            overflow: hidden;
         }
+        section > .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        #about::before, #services::before, #portfolio::before, #contact::before {
+            content: '';
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #about::before { top: 50%; left: 0; width: 60%; height: 100%; transform: translateY(-50%); background: radial-gradient(ellipse at left, rgba(147, 51, 234, 0.1) 0%, rgba(10, 10, 10, 0) 70%); }
+        #services::before { top: 50%; left: 50%; width: 80%; height: 80%; transform: translate(-50%, -50%); background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.08) 0%, rgba(10, 10, 10, 0) 70%); }
+        #portfolio::before { top: 50%; right: 0; width: 60%; height: 100%; transform: translateY(-50%); background: radial-gradient(ellipse at right, rgba(147, 51, 234, 0.1) 0%, rgba(10, 10, 10, 0) 70%); }
+        #contact::before { bottom: 0; left: 50%; width: 100%; height: 70%; transform: translateX(-50%); background: radial-gradient(ellipse at bottom, rgba(147, 51, 234, 0.12) 0%, rgba(10, 10, 10, 0) 70%); }
+
         .animated-item {
             opacity: 0;
             transform: translateY(20px);
@@ -27,50 +49,78 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 50%;
-            background-color: #8b5cf6;
-            transition: all 0.3s ease-in-out;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-            left: 0;
-        }
-        .project-card::before {
-            content: '';
-            position: absolute;
+        .nav-link { position: relative; transition: color 0.3s ease; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 50%; background-color: #8b5cf6; transition: all 0.3s ease-in-out; }
+        .nav-link:hover::after { width: 100%; left: 0; }
+
+        .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%); opacity: 0.8; transition: opacity 0.3s ease; }
+        .project-card:hover::before { opacity: 1; }
+        .project-card-content { transform: translateY(20px); transition: transform 0.4s ease, opacity 0.4s ease; opacity: 0; }
+        .project-card:hover .project-card-content { transform: translateY(0); opacity: 1; }
+
+        /* --- New Interactive Styles --- */
+
+        /* Cursor Glow Effect */
+        #cursor-glow {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%);
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, rgba(147, 51, 234, 0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out;
+            z-index: 9999;
+            filter: blur(50px);
         }
-        .project-card:hover::before {
-            opacity: 1;
+        
+        /* Interactive Service Cards */
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        .project-card-content {
-            transform: translateY(20px);
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            opacity: 0;
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.25);
+            border-color: rgba(147, 51, 234, 0.5);
         }
-        .project-card:hover .project-card-content {
-            transform: translateY(0);
-            opacity: 1;
+
+        /* Parallax Image */
+        #about-image {
+            transition: transform 0.4s ease-out;
+        }
+
+        /* Bouncing Arrow */
+        .bouncing-arrow {
+            animation: bounce 2.5s infinite cubic-bezier(0.42, 0, 0.58, 1);
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -20px); }
+            60% { transform: translate(-50%, -10px); }
+        }
+        
+        /* Enhanced Portfolio Animation */
+        #portfolio .animated-item {
+            transition-property: opacity, transform;
+            transition-duration: 0.6s;
+            transition-timing-function: ease-out;
+            transform: translateY(30px) rotate(-2deg);
+            transition-delay: var(--delay, 0s);
+        }
+        #portfolio .animated-item.is-visible {
+            transform: translateY(0) rotate(0);
         }
     </style>
 </head>
 <body class="antialiased">
+
+    <div id="cursor-glow"></div>
 
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md">
@@ -99,7 +149,7 @@
 
     <main>
         <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center text-center hero-gradient pt-20">
+        <section id="home" class="min-h-screen flex items-center justify-center text-center hero-gradient pt-20 relative">
             <div class="container mx-auto px-6">
                 <div class="animated-item">
                     <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-4">
@@ -108,15 +158,20 @@
                     <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
                         Salut, sunt Mureșan Horațiu. Un dezvoltator web freelancer axat pe crearea de site-uri web frumoase, responsive și de înaltă performanță.
                     </p>
-                    <a href="#portfolio" class="inline-block bg-purple-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-purple-700 transform hover:scale-105 transition-transform duration-300">
+                    <a href="#portfolio" class="inline-block bg-purple-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-300">
                         Vezi Lucrările Mele
                     </a>
                 </div>
             </div>
+             <a href="#about" class="bouncing-arrow text-white opacity-50 hover:opacity-100 transition-opacity">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </a>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 md:py-32 section-gradient">
+        <section id="about" class="py-20 md:py-32">
             <div class="container mx-auto px-6">
                 <div class="animated-item grid md:grid-cols-2 gap-10 md:gap-16 items-center">
                     <div>
@@ -132,7 +187,8 @@
                     <div class="relative group flex items-center justify-center">
                         <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop" 
                              alt="Laptop with code on the screen" 
-                             class="rounded-xl shadow-2xl object-cover transform transition-transform duration-500 group-hover:scale-105"
+                             id="about-image"
+                             class="rounded-xl shadow-2xl object-cover"
                              onerror="this.onerror=null;this.src='https://placehold.co/600x400/111827/FFF?text=Code+on+Screen';">
                         <div class="absolute inset-0 bg-black/40 rounded-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100 flex items-end justify-start p-6">
                             <p class="font-mono text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
@@ -149,36 +205,31 @@
         <section id="services" class="py-20 md:py-32">
             <div class="container mx-auto px-6 text-center">
                 <div class="animated-item">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ce Fac</h2>
-                    <p class="text-gray-400 max-w-2xl mx-auto mb-12">Ofer o gamă de servicii pentru a aduce la viață viziunea ta digitală, de la conceptul inițial la implementarea finală.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Serviciile Mele</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto mb-12">Mă specializez în crearea de soluții web personalizate care combină designul modern cu performanța excepțională.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Service 1 -->
-                    <div class="animated-item bg-gray-900/40 p-8 rounded-xl border border-gray-800 hover:border-purple-500 hover:-translate-y-2 transition-all duration-300">
-                        <h3 class="text-xl font-semibold text-white mb-3">Cod Sursă</h3>
-                        <p class="text-gray-400">Primește codul sursă complet, curat și bine comentat pentru site-ul tău, gata pentru a fi implementat.</p>
+                    <div class="animated-item service-card bg-gray-900/40 p-8 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-semibold text-white mb-3">Dezvoltare Site-uri de Prezentare</h3>
+                        <p class="text-gray-400">Creez site-uri de prezentare moderne și rapide, perfect optimizate pentru a capta atenția vizitatorilor și a converti interesul în acțiune.</p>
                     </div>
                     <!-- Service 2 -->
-                    <div class="animated-item bg-gray-900/40 p-8 rounded-xl border border-gray-800 hover:border-purple-500 hover:-translate-y-2 transition-all duration-300" style="transition-delay: 100ms;">
-                        <h3 class="text-xl font-semibold text-white mb-3">Implementare Cod (Subdomeniu)</h3>
-                        <p class="text-gray-400">Mă voi ocupa de configurarea tehnică pentru a lansa noul tău site pe un subdomeniu la alegerea ta.</p>
+                    <div class="animated-item service-card bg-gray-900/40 p-8 rounded-xl border border-gray-800" style="transition-delay: 100ms;">
+                        <h3 class="text-xl font-semibold text-white mb-3">Design Web Responsiv</h3>
+                        <p class="text-gray-400">Asigur o experiență de vizualizare impecabilă pe orice dispozitiv, de la telefoane mobile și tablete la desktop-uri, adaptând designul pentru fiecare ecran.</p>
                     </div>
                     <!-- Service 3 -->
-                    <div class="animated-item bg-gray-900/40 p-8 rounded-xl border border-gray-800 hover:border-purple-500 hover:-translate-y-2 transition-all duration-300" style="transition-delay: 200ms;">
-                        <h3 class="text-xl font-semibold text-white mb-3">Implementare Cod (Domeniu Personalizat)</h3>
-                        <p class="text-gray-400">Serviciu complet de implementare pe domeniul tău personalizat, inclusiv configurarea DNS pentru a deveni live.</p>
-                    </div>
-                     <!-- Service 4 -->
-                    <div class="animated-item bg-gray-900/40 p-8 rounded-xl border border-gray-800 hover:border-purple-500 hover:-translate-y-2 transition-all duration-300" style="transition-delay: 300ms;">
-                        <h3 class="text-xl font-semibold text-white mb-3">Integrare WordPress</h3>
-                        <p class="text-gray-400">Integrează fără probleme secțiuni sau teme codate personalizat în site-ul tău WordPress.</p>
+                    <div class="animated-item service-card bg-gray-900/40 p-8 rounded-xl border border-gray-800" style="transition-delay: 200ms;">
+                        <h3 class="text-xl font-semibold text-white mb-3">Optimizare și Performanță</h3>
+                        <p class="text-gray-400">Implementez cele mai bune practici pentru a garanta că site-ul tău se încarcă rapid și funcționează eficient, oferind o experiență de top utilizatorilor.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Portfolio Section -->
-        <section id="portfolio" class="py-20 md:py-32 section-gradient">
+        <section id="portfolio" class="py-20 md:py-32">
             <div class="container mx-auto px-6">
                 <div class="animated-item text-center mb-12">
                      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Lucrări Reprezentative</h2>
@@ -186,35 +237,35 @@
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Project 1 -->
-                    <div class="animated-item group relative overflow-hidden rounded-lg">
-                        <img src="https://placehold.co/600x400/111827/FFF?text=Proiect+Unu" alt="Proiect 1" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <a href="https://oaza-de-liniste.netlify.app/" target="_blank" rel="noopener noreferrer" class="animated-item block group relative overflow-hidden rounded-lg">
+                        <img src="https://placehold.co/600x400/111827/FFF?text=Oaza+de+Liniște" alt="Proiect Oaza de Liniște" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
                         <div class="project-card absolute inset-0 flex items-end p-6">
                             <div class="project-card-content">
-                                <h3 class="text-xl font-bold text-white">Platformă E-commerce</h3>
-                                <p class="text-gray-300 text-sm">Un magazin online complet, cu un CMS personalizat.</p>
+                                <h3 class="text-xl font-bold text-white">Oaza de Liniște</h3>
+                                <p class="text-gray-300 text-sm">Site de prezentare pentru o locație de cazare.</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <!-- Project 2 -->
-                    <div class="animated-item group relative overflow-hidden rounded-lg" style="transition-delay: 100ms;">
-                        <img src="https://placehold.co/600x400/1f2937/FFF?text=Proiect+Doi" alt="Proiect 2" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <a href="https://platforma-mea-saas.netlify.app/" target="_blank" rel="noopener noreferrer" class="animated-item block group relative overflow-hidden rounded-lg">
+                        <img src="https://placehold.co/600x400/1f2937/FFF?text=Platformă+SaaS" alt="Proiect Platformă SaaS" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
                         <div class="project-card absolute inset-0 flex items-end p-6">
                             <div class="project-card-content">
                                 <h3 class="text-xl font-bold text-white">Panou de Control SaaS</h3>
-                                <p class="text-gray-300 text-sm">Vizualizare de date și analiză pentru un produs SaaS.</p>
+                                <p class="text-gray-300 text-sm">Panou de control pentru o aplicație SaaS.</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <!-- Project 3 -->
-                    <div class="animated-item group relative overflow-hidden rounded-lg" style="transition-delay: 200ms;">
-                        <img src="https://placehold.co/600x400/374151/FFF?text=Proiect+Trei" alt="Proiect 3" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <a href="https://the-gallery01.netlify.app/" target="_blank" rel="noopener noreferrer" class="animated-item block group relative overflow-hidden rounded-lg">
+                        <img src="https://placehold.co/600x400/374151/FFF?text=The+Gallery" alt="Proiect The Gallery" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
                         <div class="project-card absolute inset-0 flex items-end p-6">
                              <div class="project-card-content">
-                                <h3 class="text-xl font-bold text-white">Site de Portofoliu</h3>
-                                <p class="text-gray-300 text-sm">Un portofoliu personal pentru un profesionist creativ.</p>
+                                <h3 class="text-xl font-bold text-white">The Gallery</h3>
+                                <p class="text-gray-300 text-sm">O galerie de imagini modernă și interactivă.</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -242,33 +293,24 @@
     </footer>
 
     <script>
+        // --- Interactivity Script ---
+
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Smooth scrolling for all anchor links and mobile menu closing
+        // Smooth scrolling & mobile menu closing
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                // The logo link should just go to the top, so we don't prevent its default behavior
-                if (this.getAttribute('href') === '#') {
-                    return;
-                }
-                
-                e.preventDefault(); // Stop the default jump
-
+                if (this.getAttribute('href') === '#') return;
+                e.preventDefault();
                 const targetElement = document.querySelector(this.getAttribute('href'));
                 if (targetElement) {
-                    // Smoothly scroll to the target section
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
-                
-                // If the mobile menu is open, close it after a link is clicked
                 if (!mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                 }
@@ -285,18 +327,46 @@
                 }
             });
         }, { threshold: 0.1 });
+        animatedItems.forEach(item => observer.observe(item));
 
-        animatedItems.forEach(item => {
-            observer.observe(item);
-        });
-
-        // Initialize first item
+        // Initial hero animation
         const firstItem = document.querySelector('.animated-item');
         if (firstItem) {
-             setTimeout(() => {
-                firstItem.classList.add('is-visible');
-            }, 100);
+             setTimeout(() => firstItem.classList.add('is-visible'), 100);
         }
+
+        // Cursor Glow Effect
+        const cursorGlow = document.getElementById('cursor-glow');
+        if (cursorGlow) {
+            document.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                     cursorGlow.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+                });
+            });
+        }
+        
+        // Parallax Effect for About Image
+        const aboutImage = document.getElementById('about-image');
+        if (aboutImage) {
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.pageYOffset;
+                const elementTop = aboutImage.parentElement.offsetTop;
+                const elementHeight = aboutImage.parentElement.offsetHeight;
+                
+                if (scrollPosition > elementTop - window.innerHeight && scrollPosition < elementTop + elementHeight) {
+                    let offset = (scrollPosition - elementTop - window.innerHeight / 2) * 0.05;
+                    requestAnimationFrame(() => {
+                         aboutImage.style.transform = `translateY(${offset}px)`;
+                    });
+                }
+            });
+        }
+
+        // Staggered animation for portfolio items
+        document.querySelectorAll('#portfolio .animated-item').forEach((item, index) => {
+            item.style.setProperty('--delay', `${index * 120}ms`);
+        });
+
     </script>
 </body>
 </html>
